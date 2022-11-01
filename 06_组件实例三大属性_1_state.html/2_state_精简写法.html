@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>state</title>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+
+    <!-- 引入react核心库 -->
+    <script src="../resource/react.development.js"></script>
+    <!-- 引入raact-dom 用于支持react操作dom -->
+    <script src="../resource/react-dom.development.js"></script>
+    <!-- 引入babel,用于将jsx转为js -->
+    <script src="../resource/babel.min.js"></script>
+
+
+    <!-- 此处一定要写babel -->
+    <script type="text/babel">
+
+        class Weather extends React.Component {
+            state = { isHot: true, wind: '微风'}
+            render() {
+                const {isHot} = this.state
+                return (
+                    <div onClick={this.changeWeather} style={{backgroundColor:"red"}}> 
+                        <h1>今天天气很{this.state.isHot? '炎热': '凉爽'}</h1>   
+                        <h2>{isHot?'isHot':'cool'} {this.state.wind}</h2>
+                    </div>
+                ) 
+            }
+            // 自定义方法 写成 赋值语句+箭头函数
+            changeWeather = () => {
+                const {isHot} = this.state
+                this.setState({isHot: !isHot})
+            }
+        }
+
+        ReactDOM.render(<Weather/>, document.querySelector('#app'))
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复习类</title>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+    <!-- 此处一定要写babel -->
+    <script type="text/javascript">
+        class People {
+            constructor(name, age) {
+                this.name = name
+                this.age = age
+            }
+            speak() {
+                console.log(`${this.name}说他今年${this.age}岁了.`)
+            }
+        }
+        const p1 = new People('lianghe', 24)
+        class Student extends People{
+            constructor(name, age, grade) {
+                super(name, age)
+                this.grade = grade
+                this.school = '佳力顿学校'
+            }
+            speak() {
+                console.log(`${this.name}说他今年${this.age}岁了, 读${this.school},${this.grade}年级.`)
+
+            }
+        }
+        const s1 = new Student('lianghe-xxx', 24, '大五')
+        
+        
+        
+        console.log(p1)
+        p1.speak()
+        console.log(s1)
+        s1.speak()
+
+
+        class Car {
+            constructor(name, price) {
+                this.name = name
+                this.price = price
+            }
+            a = 1
+            static wheel= 4 // 静态变量 类可以直接调用
+            static run() {
+                console.log('静态方法: 类可以直接调用', '车可以run')
+            }
+        }
+
+        console.log('car:wheel', Car.wheel)
+        // console.log('car:a', Car.a) //undefined
+
+        Car.run()
+    </script>
+</body>
+
+</html>

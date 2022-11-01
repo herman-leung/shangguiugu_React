@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>state</title>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+
+    <!-- 引入react核心库 -->
+    <script src="../resource/react.development.js"></script>
+    <!-- 引入raact-dom 用于支持react操作dom -->
+    <script src="../resource/react-dom.development.js"></script>
+    <!-- 引入babel,用于将jsx转为js -->
+    <script src="../resource/babel.min.js"></script>
+
+
+    <!-- 此处一定要写babel -->
+    <script type="text/babel">
+        //  1. 创建类式组件
+        class Weather extends React.Component {
+            // 构造器调用几次? ---[一次]
+            constructor(props) {
+                console.log('constructor')
+                super(props)
+                this.state = {
+                    isHot: true,
+                    wind: '微风'
+                }
+
+                // 解决changeWeather中this的指向问题
+                this.changeWeather = this.changeWeather.bind(this)
+            }
+            // render()调用几次? ---[1+n次] n是状态更新的次数
+            render() {
+                console.log('render')
+                const {isHot} = this.state
+                return (
+                        // 需要加this
+                    <div onClick={this.changeWeather}> 
+                        <h1>今天天气很{this.state.isHot? '炎热': '凉爽'}</h1>   
+                        <h2>{isHot?'isHot':'cool'} {this.state.wind}</h2>
+                    </div>
+                ) 
+            }
+            changeWeather() {
+                // changeWeather放在那里? ----Weather的原型对象上, 供实例使用
+                // 由于changeWeather试试作为onClick的回调, 所以不是通过实例调用的而是直接调用
+                // 类中的方法默认开启严格模式, 所以changeWeather中的this为undefined
+
+
+                // 注意: 状态不可直接更改, 必须借用内置api-> setState进行更新是[合并动作]而非替换 wind属性不丢
+                // this.state.isHot = !this.state.isHot   // 错误写法
+                const {isHot} = this.state
+                this.setState({isHot: !isHot})
+            }
+        }
+        // 2. 渲染组件到页面 
+        ReactDOM.render(<Weather/>, document.querySelector('#app'))
+    </script>
+</body>
+
+</html>
