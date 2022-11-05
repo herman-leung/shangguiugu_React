@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props的基本使用</title>
+</head>
+
+<body>
+    <div id="app1"></div>
+    <div id="app2"></div>
+    <div id="app3"></div>
+
+
+    <!-- 引入react核心库 -->
+    <script src="../resource/react.development.js"></script>
+    <!-- 引入raact-dom 用于支持react操作dom -->
+    <script src="../resource/react-dom.development.js"></script>
+    <!-- 引入babel,用于将jsx转为js -->
+    <script src="../resource/babel.min.js"></script>
+    <!-- 引入prop-types, 用于对组件标签属性进行限制 -->
+    <script src="../resource/prop-types.js"></script>
+
+
+    <!-- 此处一定要写babel -->
+    <script type="text/babel">
+
+        class People extends React.Component {
+            render() {
+                const { name, gender, age } = this.props
+                // console.log('Proptypes', PropTypes)
+
+                // props是只读的， 
+                // this.props.name="jack" //报错
+                
+                return (
+                    <div>
+                        <ul>
+                            <li>姓名:{name}</li>
+                            <li>姓别:{gender}</li>
+                            <li>年龄:{age + 1}</li>
+                        </ul>
+                    </div>
+                )
+            }
+        }
+        // 对标签属性进行类型、必要性的限制
+        People.propTypes = {
+            // React 16. 17 之后弃用 PropTypes   deprecated
+            // isRequired 必填的，必需的
+            name: PropTypes.string.isRequired, // 此时给组件传入 除了string其他类型的值,控制台会报错.
+            gender: PropTypes.string,
+            age: PropTypes.number,
+            speak: PropTypes.func // 限制speak为函数
+        }
+        // 指定属性的默认值
+        People.defaultProps = {
+            gender: '不男不女',
+            age: 18
+        }
+        ReactDOM.render(<People name="老刘"  gender="女" age={24} speak={speak} />, document.querySelector('#app1'))
+        ReactDOM.render(<People name="pxx" age={25} />, document.querySelector('#app2'))
+        ReactDOM.render(<People name="dxx" gender="男" />, document.querySelector('#app3'))
+
+        function speak() {
+            console.log('说话了')
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props的基本使用</title>
+</head>
+
+<body>
+    <div id="app1"></div>
+    <div id="app2"></div>
+    <div id="app3"></div>
+    <div id="app4"></div>
+
+
+    <!-- 引入react核心库 -->
+    <script src="../resource/react.development.js"></script>
+    <!-- 引入raact-dom 用于支持react操作dom -->
+    <script src="../resource/react-dom.development.js"></script>
+    <!-- 引入babel,用于将jsx转为js -->
+    <script src="../resource/babel.min.js"></script>
+
+
+    <!-- 此处一定要写babel -->
+    <script type="text/babel">
+
+        class People extends React.Component {
+            render() {
+                console.log('this ', this)
+                return (
+                    <div>
+                        <ul>
+                            <li>姓名:{this.props.name}</li>  
+                            <li>姓别:{this.props.gender}</li>  
+                            <li>年龄:{this.props.age}</li>  
+                        </ul>    
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<People name="lianghe" gender="女" age={24} />, document.querySelector('#app1'))
+        ReactDOM.render(<People name="pxx" gender="男" age={25} />, document.querySelector('#app2'))
+        ReactDOM.render(<People name="dxx" gender="男" age={24} />, document.querySelector('#app3'))
+
+        const p = {name: '张三', gender: '男人', age: 38}
+		// ReactDOM.render(<Person name={p.name} age={p.age} sex={p.sex}/>,document.getElementById('test3'))
+        ReactDOM.render(<People {...p} />, document.querySelector('#app4'))
+
+    </script>
+</body>
+
+</html>
